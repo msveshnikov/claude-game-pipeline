@@ -5,42 +5,46 @@ The Godot project lives in the repo root; Blender output is used in place (`res:
 ## Architecture
 
 - **The level is built at runtime from JSON** (`world.gd` reads `*_layout.json` and
-  `*_population.json`): instances glTF scenes, wires `INT_*`/`MARK_*` nodes to gameplay, spawns NPCs by
-  schedule. A rebuilt level in Blender appears in the game with no scene editing. Show a loading screen.
-- Scripts (all GDScript):
+  `*_population.json`): instances glTF scenes, wires `INT_*`/`MARK_*` nodes to gameplay, spawns
+  NPCs and opponents by schedule or trigger. A rebuilt level in Blender appears in the game with no
+  scene editing. Show a loading screen.
+- Scripts (all GDScript), adapt names to the game:
 
 | Script | Role |
 |---|---|
-| `game.gd` (autoload) | state, item table, save/load, settings, input map built in code |
-| `sfx.gd` (autoload) | sounds, music, ambience by time of day |
-| `world.gd` | level build, day/night schedule, houses & interiors, defenestration, UI flow, debug flags |
-| `day_night.gd` | sun/moon/sky/fog from the Task 3 lighting keys; lamps and lit windows at night |
-| `player.gd`, `enemy.gd`, `npc.gd` | hero controller & combat, enemy AI per type, townsfolk |
+| `game.gd` (autoload) | state, item/upgrade tables, save/load, settings, input map built in code |
+| `sfx.gd` (autoload) | sounds, music, ambience per mood |
+| `world.gd` | level build, schedules/waves, interactables, UI flow, debug flags |
+| `mood.gd` (e.g. `day_night.gd`) | sun/sky/fog/lights from the Task 3 lighting presets |
+| `player.gd` | controller, camera, the player's verbs |
+| `enemy.gd`, `npc.gd` (+ `vehicle.gd`...) | opponent AI per type, background NPCs |
 | `ui/ui_kit.gd` + `ui/*.gd` | UI built in code from one kit |
 | `ui/touch_controls.gd` | phone controls (floating stick, look drag, action buttons) |
 | `autotest.gd`, `shot_tour.gd` | self-test and screenshot tours |
 
-- **UI as code, not .tscn**: one `UiKit` (theme, parchment panels in wood/iron frames, blackletter
-  headings, body font) used by every screen. The title screen can be the painted concept art itself
-  with invisible buttons over the painted menu items. Check that fonts cover the UI language.
+- **UI as code, not .tscn**: one `UiKit` (theme, panel and frame styles, heading and body fonts) used
+  by every screen. The title screen can be the painted concept art itself with invisible buttons over
+  the painted menu items. Check that fonts cover every UI language.
 - **Animations** from glTF via AnimationPlayer; loop flags set in code; playback speed scaled to
   movement speed so feet don't slide.
-- **Characters stream** in a radius around the player (e.g. spawn < 105 m, despawn > 150 m) to keep the
-  stitched world fast, especially on web/mobile.
-- Simple AI without navmesh is enough at first: move toward the player, slide sideways around
-  obstacles; add NavigationRegion3D later if enemies get stuck.
+- **Stream characters** in a radius around the player (e.g. spawn < 105 m, despawn > 150 m) to keep
+  big levels fast, especially on web/mobile.
+- Simple AI without a navmesh is enough at first: move toward the target, slide sideways around
+  obstacles; add NavigationRegion3D when opponents get stuck or levels get complex.
 - Water: a plane with a procedural shader (normals only, no screen reads) works on all renderers.
-- Map tab: an image plus the world X/Z rectangle it covers (`map.rect` in the layout JSON); the player
-  arrow is placed with that mapping and rotated to the hero's facing. See 05 for repainting the map.
+- Map screen: an image plus the world X/Z rectangle it covers (`map.rect` in the layout JSON); the
+  player marker is placed with that mapping and rotated to the player's facing. See 05 for repainting
+  the map from the real layout.
 
 ## Debug flags (pass after `--`)
 
-- `--autotest`: plays through movement, combat, inventory, trade, smith, house entry, defenestration,
-  chest, night, fight, save/load, death, pause, settings, menu; writes `renders/game/*.png` and
-  `autotest.log` (lines prefixed `AUTOTEST`). Run after every gameplay change; works in exported builds.
+- `--autotest`: plays through the core loop and every system — movement, the main verbs, each
+  interactable kind, UI screens, progression/shop, mood switch, save/load, failure, pause, settings,
+  menu — and writes `renders/game/*.png` and `autotest.log` (lines prefixed `AUTOTEST`). Run after
+  every gameplay change; make it work in exported builds too.
 - `--tour x,z,yaw[,pitch[,y]] ...`: screenshots at given spots; `cam,px,py,pz,tx,ty,tz` for a free
-  camera; `map,x,z,yaw[,y]` shoots the Map tab with the player arrow at that spot.
-- `--touch`: force phone controls on desktop. `--layout <level>`: load a single district.
+  camera; `map,x,z,yaw[,y]` shoots the map screen with the player marker at that spot.
+- `--touch`: force phone controls on desktop. `--layout <level>`: load a single level or area.
 - Optional: `--perf`, `--reach` (reachability grid), `--cinematic` (scripted trailer camera recorded with
   `--write-movie`).
 
@@ -64,6 +68,6 @@ godot --headless --path . --export-debug "Android" build/android/<Game>.apk
 ## Known traps
 
 - `--check-only` reports false errors about autoloads; the real check is the autotest.
-- Lambdas holding freed NPCs flood errors at night: disconnect or check `is_instance_valid`.
+- Lambdas holding freed NPCs flood errors: disconnect or check `is_instance_valid`.
 - Imported light energy far too high → fix the Blender export (RAW, 1/30), not Godot.
 - Screen-space AA isn't available in Compatibility: a harmless warning on web.
