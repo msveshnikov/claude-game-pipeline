@@ -13,11 +13,11 @@ Godot game loads its levels from JSON that Blender writes.
 ## Install
 
 ```
-/plugin marketplace add msveshnikov/alchemists-of-prague
-/plugin install game-pipeline@alchemists-of-prague
+/plugin marketplace add msveshnikov/claude-game-pipeline
+/plugin install game-pipeline@claude-game-pipeline
 ```
 
-Or copy `skills/game-pipeline` into `~/.claude/skills/`.
+Or copy `skills/game-pipeline` from this repository into `~/.claude/skills/`.
 
 ## Use
 
@@ -56,5 +56,5 @@ The `game-pipeline` skill loads when the request fits.
 
 ## License
 
-MIT, see [LICENSE](LICENSE). The license covers this plugin only, not the Alchemists of Prague game
-or its assets in the rest of the repository.
+MIT, see [LICENSE](LICENSE). The game itself lives in its own repository,
+[msveshnikov/alchemists-of-prague](https://github.com/msveshnikov/alchemists-of-prague), and is not covered by this license.

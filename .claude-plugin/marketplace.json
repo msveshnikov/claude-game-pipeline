@@ -1,0 +1,16 @@
+{
+  "name": "claude-game-pipeline",
+  "owner": {
+    "name": "Max Sveshnikov"
+  },
+  "metadata": {
+    "description": "Make 3D games with Claude Code: ChatGPT concept art, Blender by Python, Godot 4, shipped builds"
+  },
+  "plugins": [
+    {
+      "name": "game-pipeline",
+      "source": "./",
+      "description": "Concept art (ChatGPT) -> Blender (Python) -> Godot 4 -> shipped Windows/Web/Android builds, with task1-5 templates."
+    }
+  ]
+}

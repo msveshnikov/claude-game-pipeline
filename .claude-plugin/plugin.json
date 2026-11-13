@@ -5,8 +5,8 @@
   "author": {
     "name": "Max Sveshnikov"
   },
-  "homepage": "https://github.com/msveshnikov/alchemists-of-prague",
-  "repository": "https://github.com/msveshnikov/alchemists-of-prague",
+  "homepage": "https://github.com/msveshnikov/claude-game-pipeline",
+  "repository": "https://github.com/msveshnikov/claude-game-pipeline",
   "license": "MIT",
   "keywords": ["gamedev", "godot", "blender", "concept-art", "chatgpt", "pipeline"]
 }
