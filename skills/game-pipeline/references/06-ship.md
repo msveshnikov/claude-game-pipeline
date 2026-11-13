@@ -22,6 +22,27 @@ Standing rule: when a task is finished, ship it without asking.
    for errors).
 7. Tell the user: commits, build sizes, the live URL, and what you verified.
 
+## GitHub release (downloadable exe + APK)
+
+For milestone builds, or when the user asks for downloads on GitHub (not every task), attach the
+Windows exe and the APK to a GitHub release. The exe is a single file with the `.pck` embedded, so
+it needs no zip; GitHub's per-asset limit is 2 GB.
+
+1. Bump `version/code` and `version/name` in the Android preset when this is a new release
+   (Android refuses to update an installed APK with the same or a lower `version/code`).
+2. Export fresh builds (step 4), commit and push, then:
+   ```
+   gh release create vX.Y build/windows/<Game>.exe build/android/<Game>.apk \
+     --target main --title "<Game> X.Y" --notes-file notes.md
+   ```
+   Notes: what's in the build, the web URL, and install hints (SmartScreen "More info → Run anyway"
+   for the unsigned exe; "install unknown apps" for a debug-signed APK).
+3. Verify: `gh release view vX.Y --json assets` shows both assets `uploaded` with the local sizes, and
+   `https://github.com/<owner>/<repo>/releases/latest/download/<Game>.exe` answers 200.
+4. Link `releases/latest` from the project README next to the web URL.
+
+Release assets and tags are public on a public repo; creating one counts as a push.
+
 Pushing to the git remote is separate: push only when the user asks (or when their project rules say so).
 
 Keep the deploy target and the Godot/Blender paths in the project README and in memory so the next

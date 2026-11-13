@@ -1,6 +1,6 @@
 {
   "name": "game-pipeline",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Make 3D games of any genre with Claude Code: ChatGPT concept art in the built-in browser, Blender driven by Python for every asset and level, Godot 4 game with Windows/Web/Android builds, task1-5 templates, ship after every task.",
   "author": {
     "name": "Max Sveshnikov"
