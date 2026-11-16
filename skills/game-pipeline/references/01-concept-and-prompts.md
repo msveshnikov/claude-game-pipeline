@@ -74,19 +74,6 @@ in the style of <reference> menus`. Screens: title screen (with the game title a
 in — it can be used directly as the menu background with invisible buttons), settings, HUD,
 inventory/loadout, shop or upgrade screen if any, map, game over / death screen, pause.
 
-## Worked example (Alchemists of Prague, third-person action RPG)
-
-```
-Game concept art in the style of early-2000s European PC RPGs like Gothic 1 and Gothic 2: semi-realistic,
-hand-painted textures, grounded medieval look, slightly stylized proportions, no cartoon, no low-poly,
-no photorealism. Medieval Prague, 14th century. Consistent palette: warm stone beige, terracotta roofs,
-dark timber, muted greens and deep reds. Soft painterly lighting, readable silhouettes, isometric-ish
-three-quarter view from above, 16:9.
-```
-Its locations were four districts (a market square, a bridge, a hillside quarter, a cliff fortress),
-each painted by day, by night and empty; characters were the hero, three enemy types, townsfolk and a
-horse; UI screens followed a parchment-and-iron look.
-
 ## Where things go
 
 ```
