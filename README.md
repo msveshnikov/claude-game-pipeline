@@ -41,6 +41,7 @@ The `game-pipeline` skill loads when the request fits.
 - Blender 4.2+ (built on 5.2), Godot 4.x (built on 4.7.2) with export templates
 - Python 3 with `numpy`, `pillow`, `opencv-python` for the image helpers
 - Optional: a web server reachable over `scp` to host the Web build and APK
+- Optional: for Android builds: SDK, NDK, CMake tools
 
 ## How it keeps AI-made games from being slop
 
